@@ -4,20 +4,20 @@ languages:
 - csharp
 products:
 - azure
-services: virtual-network
-platforms: dotnet
-author: yaohaizh
+extensions:
+- services: virtual-network
+- platforms: dotnet
 ---
 
 # Manage virtual network with site-to-site VPN connection #
 
-          Azure Network sample for managing virtual network gateway.
-           - Create virtual network with gateway subnet
-           - Create VPN gateway
-           - Create local network gateway
-           - Create VPN Site-to-Site connection
-           - List VPN Gateway connections for particular gateway
-           - Reset virtual network gateway
+ Azure Network sample for managing virtual network gateway.
+  - Create virtual network with gateway subnet
+  - Create VPN gateway
+  - Create local network gateway
+  - Create VPN Site-to-Site connection
+  - List VPN Gateway connections for particular gateway
+  - Reset virtual network gateway
 
 
 ## Running this Sample ##
