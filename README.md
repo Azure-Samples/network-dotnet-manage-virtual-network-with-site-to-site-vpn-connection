@@ -7,6 +7,7 @@ products:
 extensions:
 - services: virtual-network
 - platforms: dotnet
+description: "Azure Network sample for managing virtual network gateway."
 ---
 
 # Manage virtual network with site-to-site VPN connection #
