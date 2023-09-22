@@ -4,7 +4,6 @@
 using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Samples.Common;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager;
@@ -109,7 +108,6 @@ namespace ManageVpnGatewaySite2SiteConnection
                 var localNetworkGatewayLro = await resourceGroup.GetLocalNetworkGateways().CreateOrUpdateAsync(WaitUntil.Completed, localGatewayName, localNetworkGatewayInput);
                 LocalNetworkGatewayResource localNetworkGateway = localNetworkGatewayLro.Value;
                 Utilities.Log($"Created virtual network gateway: {localNetworkGateway.Data.Name}");
-                ;
 
                 //============================================================
                 // Create VPN Site-to-Site connection
