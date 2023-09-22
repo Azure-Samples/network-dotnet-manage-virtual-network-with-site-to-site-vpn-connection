@@ -76,29 +76,5 @@ namespace Azure.ResourceManager.Samples.Common
             var publicIPLro = await resourceGroup.GetPublicIPAddresses().CreateOrUpdateAsync(WaitUntil.Completed, publicIPName, publicIPInput);
             return publicIPLro.Value;
         }
-
-        public static async Task<NetworkInterfaceResource> CreateNetworkInterface(ResourceGroupResource resourceGroup, VirtualNetworkResource vnet, string nicName = null)
-        {
-            nicName = nicName is null ? CreateRandomName("nic") : nicName;
-
-            var nicInput = new NetworkInterfaceData()
-            {
-                Location = resourceGroup.Data.Location,
-                IPConfigurations =
-                    {
-                        new NetworkInterfaceIPConfigurationData()
-                        {
-                            Name = "default-config",
-                            PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                            Subnet = new SubnetData()
-                            {
-                                Id = vnet.Data.Subnets.First(item => item.Name != "GatewaySubnet").Id
-                            }
-                        }
-                    }
-            };
-            var networkInterfaceLro = await resourceGroup.GetNetworkInterfaces().CreateOrUpdateAsync(WaitUntil.Completed, nicName, nicInput);
-            return networkInterfaceLro.Value;
-        }
     }
 }
