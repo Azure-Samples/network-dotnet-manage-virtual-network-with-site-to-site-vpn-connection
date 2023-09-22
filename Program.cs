@@ -35,6 +35,7 @@ namespace ManageVpnGatewaySite2SiteConnection
             string localGatewayName = Utilities.CreateRandomName("lngw");
             string connectionName = Utilities.CreateRandomName("con");
 
+            try
             {
                 // Get default subscription
                 SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
@@ -109,12 +110,6 @@ namespace ManageVpnGatewaySite2SiteConnection
                 LocalNetworkGatewayResource localNetworkGateway = localNetworkGatewayLro.Value;
                 Utilities.Log($"Created virtual network gateway: {localNetworkGateway.Data.Name}");
                 ;
-                //ILocalNetworkGateway lngw = azure.LocalNetworkGateways.Define(localGatewayName)
-                //    .WithRegion(region)
-                //    .WithExistingResourceGroup(rgName)
-                //    .WithIPAddress("40.71.184.214")
-                //    .WithAddressSpace("192.168.3.0/24")
-                //    .Create();
 
                 //============================================================
                 // Create VPN Site-to-Site connection
@@ -130,13 +125,6 @@ namespace ManageVpnGatewaySite2SiteConnection
                 VirtualNetworkGatewayConnectionResource connection = connectionLro.Value;
                 Utilities.Log($"Created virtual network gateway connection: {connection.Data.Name}");
 
-                //vngw.Connections
-                //    .Define(connectionName)
-                //    .WithSiteToSite()
-                //    .WithLocalNetworkGateway(lngw)
-                //    .WithSharedKey("MySecretKey")
-                //    .Create();
-
                 //============================================================
                 // List VPN Gateway connections for particular gateway
                 Utilities.Log("List VPN Gateway connections for particular gateway:");
@@ -146,8 +134,9 @@ namespace ManageVpnGatewaySite2SiteConnection
                 }
                 //============================================================
                 // Reset virtual network gateway
-                vpnGateway.Reset(WaitUntil.Completed);
+                vpnGateway.Reset(WaitUntil.Started);
             }
+            finally
             {
                 try
                 {
@@ -171,19 +160,18 @@ namespace ManageVpnGatewaySite2SiteConnection
 
         public static async Task Main(string[] args)
         {
-            var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
-            var clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
-            var tenantId = Environment.GetEnvironmentVariable("TENANT_ID");
-            var subscription = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
-            ClientSecretCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
-            ArmClient client = new ArmClient(credential, subscription);
-
-            await RunSample(client);
             try
             {
                 //=================================================================
                 // Authenticate
+                var clientId = Environment.GetEnvironmentVariable("CLIENT_ID");
+                var clientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET");
+                var tenantId = Environment.GetEnvironmentVariable("TENANT_ID");
+                var subscription = Environment.GetEnvironmentVariable("SUBSCRIPTION_ID");
+                ClientSecretCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+                ArmClient client = new ArmClient(credential, subscription);
 
+                await RunSample(client);
             }
             catch (Exception ex)
             {
